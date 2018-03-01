@@ -2,7 +2,9 @@
 
 #HSLIDE
 
-### Списъци
+## Списъци
+
+![Image-Absolute](assets/list.jpg)
 
 #HSLIDE
 
@@ -59,7 +61,9 @@ b  # [0]
 
 #HSLIDE
 
-### Map, reduce all the way down
+### Mapreduce all the way down
+
+![Image-Absolute](assets/mapreduce.jpg)
 
 #HSLIDE
 
@@ -71,7 +75,7 @@ defmodule ListUtils do
   def length([_head | tail]), do: 1 + length(tail)
 end
 
-ListUtils.length([1, 2, 3]) # 3
+ListUtils.length(["cat", "dog", "fish", "horse"]) # 4
 ```
 
 #HSLIDE
