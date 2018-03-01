@@ -289,3 +289,279 @@ defmodule Enum
   end
 end
 ```
+
+#HSLIDE
+
+## Речници и карти
+
+![Image-Absolute](assets/maps.jpg)
+
+#### Представяне на Map
+
+
+![Image-Absolute](assets/hashtrie.jpg)
+
+#HSLIDE
+####  Създаване и достъп до Map
+
+```elixir
+iex> %{}
+%{}
+
+iex> %{name: "Пешо"}
+%{name: "Пешо"}
+```
+
+#HSLIDE
+#### Map с ключове атоми:
+
+```elixir
+pesho = %{
+  name: "Пешо",
+  age: 35,
+  hobbies: {:drink, :smoke, :xxx, :eurofootball},
+  job: "шлосер"
+}
+```
+
+#HSLIDE
+#### Четене на стойности
+
+```elixir
+iex> pesho[:name]
+"Пешо"
+iex> pesho.name
+"Пешо"
+iex> Map.fetch(pesho, :name)
+{:ok, "Пешо"}
+iex> Map.fetch!(pesho, :name)
+"Пешо"
+iex> Map.get(pesho, :name)
+"Пешо"
+```
+
+#HSLIDE
+#### Четене на стойности
+
+```elixir
+iex> pesho[:full_name]
+nil
+iex> pesho.full_name
+** (KeyError) key :full_name not found
+iex> Map.fetch(pesho, :full_name)
+:error
+iex> Map.fetch!(pesho, :full_name)
+** (KeyError) key :full_name not found
+```
+
+#HSLIDE
+#### Четене на стойности
+
+```elixir
+iex> Map.get(pesho, :full_name)
+nil
+iex> Map.get(pesho, :full_name, "Петър Петров")
+"Петър Петров"
+
+iex> Map.get_lazy(pesho, :full_name, fn -> "Петър Петров" end)
+"Петър Петров"
+```
+
+#HSLIDE
+#### Ако ключовете не са атоми, синтаксиса е малко по-различен:
+
+```elixir
+pesho = %{
+  "name" => "Пешо",
+  "age" => 35,
+  "hobbies" => {:drink, :smoke, :xxx, :eurofootball},
+  "job" => "шлосер"
+}
+```
+
+#HSLIDE
+```elixir
+iex> pesho["age"]
+35
+iex> pesho.age
+** (KeyError) key :age not found
+iex> pesho."age"
+** (KeyError) key :age not found
+```
+
+#HSLIDE
+#### Промяна на Map
+
+```elixir
+iex> Map.pop(pesho, :name)
+{"Пешо", %{
+    age: 35,
+    hobbies: {:drink, :smoke, :xxx, :eurofootball},
+    job: "шлосер"
+  }
+}
+iex> Map.pop(pesho, :full_name, "Петър Панов")
+{"Петър Панов", %{...}}
+iex> Map.pop_lazy(pesho, :nick, fn -> "PI4A" end)
+{"PI4A", %{...}}
+```
+
+#HSLIDE
+#### Промяна на Map
+
+```elixir
+iex> Map.delete(pesho, :name)
+%{
+  age: 35,
+  hobbies: {:drink, :smoke, :xxx, :eurofootball},
+  job: "шлосер"
+}
+iex> Map.delete(pesho, :full_name)
+%{
+  age: 35,
+  hobbies: {:drink, :smoke, :xxx, :eurofootball},
+  job: "шлосер",
+  name: "Пешо"
+}
+```
+
+#HSLIDE
+#### Промяна на Map
+
+```elixir
+iex> Map.drop(pesho, [:hobbies, :job])
+%{age: 35, name: "Пешо"}
+```
+
+#HSLIDE
+#### Промяна на Map
+
+```elixir
+pesho = %{
+  name: "Пешо",
+  age: 35,
+  hobbies: {:drink, :smoke, :xxx, :eurofootball},
+  job: "шлосер"
+}
+
+iex> %{pesho | hobbies: :none}
+%{age: 35, hobbies: :none, job: "шлосер", name: "Пешо"}
+
+iex> %{pesho | drink: :rakia}
+** (KeyError) key :drink not found in:
+```
+
+#HSLIDE
+#### Промяна на Map
+
+```elixir
+iex> Map.merge(pesho, %{hobbies: :just_drinking, dring: :rakia})
+%{age: 35, dring: :rakia, hobbies: :just_drinking, job: "шлосер",
+  name: "Пешо"}
+```
+
+#HSLIDE
+#### Pattern matching
+
+```elixir
+iex> pesho = %{
+  age: 35, dring: :rakia, hobbies: :just_drinking, name: "Пешо"
+}
+%{age: 35, dring: :rakia, hobbies: :just_drinking, name: "Пешо"}
+
+iex> %{name: x} = pesho
+%{age: 35, dring: :rakia, hobbies: :just_drinking, name: "Пешо"}
+iex> x
+"Пешо"
+```
+
+#HSLIDE
+#### Pattern matching
+f
+```elixir
+iex> %{name: _, age: _} = pesho
+%{age: 35, dring: :rakia, hobbies: :just_drinking, name: "Пешо"}
+iex> %{name: _, age: _, sex: _} = pesho
+** (MatchError)
+```
+
+#HSLIDE
+#### Pattern matching
+```elixir
+defmodule A do
+  def f(%{name: name} = person) do
+    IO.puts(name)
+    person
+  end
+end
+
+iex> A.f(pesho)
+Пешо
+%{age: 35, dring: :rakia, hobbies: :just_drinking, name: "Пешо"}
+```
+
+#HSLIDE
+#### Операции върху вложени речници
+
+```elixir
+data = %{
+  proboscidea: %{
+    elephantidae: %{
+      elephas: [
+        "Asian Elephant", "Indian Elephant",
+        "Sri Lankan Elephant"
+      ],
+      loxodonta: [
+        "African bush elephant",
+        "African forest elephant"
+      ]
+    },
+    mammutidae: %{ mammut: ["Mastodon"] }
+  }
+}
+```
+
+#HSLIDE
+#### Операции върху вложени речници
+
+```elixir
+iex> put_in(
+  data, [:proboscidea, :elephantidae, :fictional], ["Jumbo"]
+)
+```
+
+#HSLIDE
+#### Операции върху вложени речници
+
+```elixir
+%{
+  proboscidea: %{
+    elephantidae: %{
+      elephas: [
+        "Asian Elephant", "Indian Elephant",
+        "Sri Lankan Elephant"
+      ],
+      fictional: ["Jumbo"],
+      loxodonta: [
+        "African bush elephant", "African forest elephant"
+      ]
+    },
+    mammutidae: %{ mammut: ["Mastodon"] }
+  }
+}
+```
+
+#HSLIDE
+#### Операции върху вложени речници
+
+```elixir
+iex> put_in(data.proboscidea.elephantidae.fictional, ["Jumbo"])
+```
+
+#HSLIDE
+#### Операции върху вложени речници
+
+```elixir
+iex> get_in(data, [:proboscidea, :elephantidae, :loxodonta])
+["African bush elephant", "African forest elephant"]
+```
