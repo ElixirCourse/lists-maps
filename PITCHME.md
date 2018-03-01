@@ -218,3 +218,27 @@ end
 
 ListUtils.map([1,2,3,4,5], &(&1 * &1)) [1,4,9,16,25]
 ```
+
+#HSLIDE
+
+#### Няколко съвета
+
+- отворете и разгледайте документацията на `List` модула
+- внимавайте при конструирането на списъци
+- научете какво е опашкова рекурсия
+- ако обръщате списък, използвайте `Enum.reverse/1` или `:list.reverse/1`
+
+#HSLIDE
+
+```elixir
+defmodule Enum
+  @spec reverse(t) :: list
+  def reverse(enumerable)
+
+  def reverse([]), do: []
+  def reverse([_] = list), do: list
+  def reverse([item1, item2]), do: [item2, item1]
+  def reverse([item1, item2 | rest]), do: :lists.reverse(rest, [item2, item1])
+  def reverse(enumerable), do: reduce(enumerable, [], &[&1 | &2])
+end
+```
