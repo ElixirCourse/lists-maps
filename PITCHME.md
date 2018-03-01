@@ -31,7 +31,7 @@ a = [1, 2, 3]    # [1, 2, 3]
 b = [0 | a]      # [0, 1, 2, 3]
 c = [-2, -1 | b] # [-2, -1, 0, 1, 2, 3]
 d = [a | b]      # [[1, 2, 3], 0, 1, 2, 3]
-e = a ++ b      # [1, 2, 3, 0, 1, 2, 3]
+e = a ++ b       # [1, 2, 3, 0, 1, 2, 3]
 ```
 
 #HSLIDE
@@ -63,7 +63,7 @@ b  # [0]
 
 ### Mapreduce all the way down
 
-![Image-Absolute](assets/mapreduce.jpg)
+![Image-Relative](assets/mapreduce.jpg)
 
 #HSLIDE
 
@@ -120,8 +120,15 @@ defmodule ListUtils do
     reduce(tail, func.(head, acc), func)
   end
 end
+```
 
-list_length = &ListUtils.reduce(&1, fn _head, acc -> 1 + acc end, 0)
+#HSLIDE
+
+#### Reduce
+
+```elixir
+list_length
+ = &ListUtils.reduce(&1, fn _, acc -> 1 + end, 0)
 
 list_length.(["cat", "dog", "horse"]) # 3
 ```
@@ -147,7 +154,13 @@ defmodule ListUtils do
     end
   end
 end
+```
 
+#HSLIDE
+
+#### Изграждане
+
+```elixir
 ListUtils.filter([1,2,3,4,5], &(rem(&1, 2) == 0)) # => [2, 4]
 ```
 
@@ -181,7 +194,13 @@ defmodule ListUtils do
     do_result(tail, [head | result])
   end
 end
+```
 
+#HSLIDE
+
+#### Изграждане
+
+```elixir
 ListUtils.reverse([1,2,3,4,5]) # [5, 4, 3, 2, 1]
 ```
 
@@ -206,7 +225,13 @@ defmodule ListUtils do
     end
   end
 end
+```
 
+#HSLIDE
+
+#### Изграждане
+
+```elixir
 ListUtils.filter([1,2,3,4,5], &(rem(&1, 2) == 0)) # [2, 4]
 ```
 
@@ -227,7 +252,13 @@ defmodule ListUtils do
     do_map(tail, func, [func.(head) | result])
   end
 end
+```
 
+#HSLIDE
+
+#### Map
+
+```elixir
 ListUtils.map([1,2,3,4,5], &(&1 * &1)) [1,4,9,16,25]
 ```
 
@@ -249,9 +280,7 @@ defmodule Enum
 
   def reverse([]), do: []
   def reverse([_] = list), do: list
-  def reverse([item1, item2]) do
-    [item2, item1]
-  end
+  def reverse([item1, item2]), do: [item2, item1]
   def reverse([item1, item2 | rest]) do
     :lists.reverse(rest, [item2, item1])
   end
