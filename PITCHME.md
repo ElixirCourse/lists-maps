@@ -185,13 +185,13 @@ b = [0 | a]
 ```elixir
 defmodule ListUtils do
   def reverse(list) when is_list(list) do
-    do_revers(list)
+    do_reverse(list)
   end
 
   defp do_reverse(list, result \\ [])
-  defp do_reverse([], resilt), do: result
+  defp do_reverse([], result), do: result
   defp do_reverse([head | tail], result) do
-    do_result(tail, [head | result])
+    do_reverse(tail, [head | result])
   end
 end
 ```
