@@ -67,7 +67,7 @@ b  # [0]
 
 #HSLIDE
 
-#### Обхождане (Рекурси)
+#### Обхождане (Рекурсия)
 
 ```elixir
 defmodule ListUtils do
@@ -92,7 +92,7 @@ ListUtils.length(["cat", "dog", "fish", "horse"])
 
 #HSLIDE
 
-#### Обхождане (Опашкова рекурси)
+#### Обхождане (Опашкова рекурсия)
 
 ```elixir
 defmodule ListUtils do
