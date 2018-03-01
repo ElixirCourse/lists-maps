@@ -296,8 +296,9 @@ end
 
 ![Image-Absolute](assets/maps.jpg)
 
-#### Представяне на Map
+#HSLIDE
 
+#### Представяне на Map
 
 ![Image-Absolute](assets/hashtrie.jpg)
 
@@ -456,8 +457,8 @@ iex> %{pesho | drink: :rakia}
 
 ```elixir
 iex> Map.merge(pesho, %{hobbies: :just_drinking, dring: :rakia})
-%{age: 35, dring: :rakia, hobbies: :just_drinking, job: "шлосер",
-  name: "Пешо"}
+%{age: 35, dring: :rakia, hobbies: :just_drinking,
+   job: "шлосер", name: "Пешо"}
 ```
 
 #HSLIDE
