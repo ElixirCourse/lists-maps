@@ -480,7 +480,7 @@ iex> x
 
 #HSLIDE
 #### Pattern matching
-f
+
 ```elixir
 iex> %{name: _, age: _} = pesho
 %{age: 35, dring: :rakia, hobbies: :just_drinking, name: "Пешо"}
@@ -490,6 +490,7 @@ iex> %{name: _, age: _, sex: _} = pesho
 
 #HSLIDE
 #### Pattern matching
+
 ```elixir
 defmodule A do
   def f(%{name: name} = person) do
@@ -567,4 +568,45 @@ iex> put_in(data.proboscidea.elephantidae.fictional, ["Jumbo"])
 ```elixir
 iex> get_in(data, [:proboscidea, :elephantidae, :loxodonta])
 ["African bush elephant", "African forest elephant"]
+```
+
+
+#HSLIDE
+
+#### Няколко съвета
+
+- отворете и разгледайте документацията на `Map` модула
+- преизползвайте максимална част от вече конструираните Map-ове
+- опитвайте се да правите максимално много промени на ведниъж
+
+
+#HSLIDE
+
+#### Don't do this at home
+
+```elixir
+def change_name_and_age(%{name: name, age: age} = persone) do
+  persone
+  |> Map.update(:name, String.capitalize(name))
+  |> Map.update(:age, age + 1)
+end
+```
+#### Even worse
+
+```elixir
+def change_name_and_age(%{name: name, age: age, email: email}) do
+  %{name: String.capitalize(name),
+    age: age + 1,
+    email: email}
+end
+```
+
+#HSLIDE
+
+#### Better
+
+```elixir
+def change_name_and_age(%{name: name, age: age} = persone) do
+  %{persone | name: String.capitalize(name), age: age + 1}
+end
 ```
