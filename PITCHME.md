@@ -298,7 +298,9 @@ end
 
 #HSLIDE
 
-#### Представяне на Map
+### Представяне на Map в паметта
+
+#HSLIDE
 
 ![Image-Absolute](assets/hashtrie.gif)
 
