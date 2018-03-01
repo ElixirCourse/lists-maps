@@ -39,7 +39,7 @@ e = a ++ b       # [1, 2, 3, 0, 1, 2, 3]
 #### Pattern Matching
 
 ```elixir
-[a | b] = [1,2,3]
+[a | b] = [1, 2, 3]
 a  # 1
 b  # [2, 3]
 [x, y | z] = [4, 5]
@@ -116,8 +116,8 @@ defmodule ListUtils do
   end
 
   def do_reduce([], _func, acc), do: acc
-  def do_reduce([head | tail], acc, func) do
-    reduce(tail, func.(head, acc), func)
+  def do_reduce([head | tail], func, acc) do
+    do_reduce(tail, func, func.(head, acc))
   end
 end
 ```
@@ -146,7 +146,7 @@ defmodule ListUtils do
   end
 
   defp do_filter(list, predicate, result \\ [])
-  defp do_filter([], _,predicate result), do: result
+  defp do_filter([], _predicate, result), do: result
   defp do_filter([head | tail], predicate, result) do
     case predicate.(head) do
       true -> do_filter(tail, predicate, result ++ [head])
@@ -201,7 +201,7 @@ end
 #### Изграждане
 
 ```elixir
-ListUtils.reverse([1,2,3,4,5]) # [5, 4, 3, 2, 1]
+ListUtils.reverse([1, 2, 3, 4, 5]) # [5, 4, 3, 2, 1]
 ```
 
 
@@ -458,8 +458,8 @@ iex> %{pesho | drink: :rakia}
 #### Промяна на Map
 
 ```elixir
-iex> Map.merge(pesho, %{hobbies: :just_drinking, dring: :rakia})
-%{age: 35, dring: :rakia, hobbies: :just_drinking,
+iex> Map.merge(pesho, %{hobbies: :just_drinking, drink: :rakia})
+%{age: 35, drink: :rakia, hobbies: :just_drinking,
    job: "шлосер", name: "Пешо"}
 ```
 
@@ -585,8 +585,8 @@ iex> get_in(data, [:proboscidea, :elephantidae, :loxodonta])
 #### Don't do this at home
 
 ```elixir
-def change_name_and_age(%{name: name, age: age} = persone) do
-  persone
+def change_name_and_age(%{name: name, age: age} = person) do
+  person
   |> Map.update(:name, String.capitalize(name))
   |> Map.update(:age, age + 1)
 end
@@ -606,7 +606,7 @@ end
 #### Better
 
 ```elixir
-def change_name_and_age(%{name: name, age: age} = persone) do
-  %{persone | name: String.capitalize(name), age: age + 1}
+def change_name_and_age(%{name: name, age: age} = person) do
+  %{person | name: String.capitalize(name), age: age + 1}
 end
 ```
