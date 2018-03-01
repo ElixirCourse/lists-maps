@@ -61,7 +61,7 @@ b  # [0]
 
 #HSLIDE
 
-### Mapreduce all the way down
+### Recursion all the way down
 
 ![Image-Relative](assets/mapreduce.jpg)
 
