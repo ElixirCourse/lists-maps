@@ -106,7 +106,8 @@ end
 
 ```elixir
 defmodule ListUtils do
-  def reduce(list, func, acc \\ 0) when is_list(list) and is_function(func) do
+  def reduce(list, func, acc \\ 0)
+  when is_list(list) and is_function(func) do
     do_reduce(list, func, acc)
   end
 
@@ -128,7 +129,8 @@ list_length.(["cat", "dog", "horse"]) # 3
 
 ```elixir
 defmodule ListUtils do
-  def filter(list, predicate) when is_list(list) and is_function(predicate) do
+  def filter(list, predicate)
+  when is_list(list) and is_function(predicate) do
     do_filter(list, predicate)
   end
 
@@ -165,11 +167,15 @@ b = [0 | a]
 
 ```elixir
 defmodule ListUtils do
-  def reverse(list) when is_list(list), do: do_revers(list)
+  def reverse(list) when is_list(list) do
+    do_revers(list)
+  end
 
   defp do_reverse(list, result \\ [])
   defp do_reverse([], resilt), do: result
-  defp do_reverse([head | tail], result), do: do_result(tail, [head | result])
+  defp do_reverse([head | tail], result) do
+    do_result(tail, [head | result])
+  end
 end
 
 ListUtils.reverse([1,2,3,4,5]) # [5, 4, 3, 2, 1]
@@ -182,7 +188,8 @@ ListUtils.reverse([1,2,3,4,5]) # [5, 4, 3, 2, 1]
 
 ```elixir
 defmodule ListUtils do
-  def filter(list, predicate) when is_list(list) and is_function(predicate) do
+  def filter(list, predicate)
+  when is_list(list) and is_function(predicate) do
     do_filter(list, predicate)
   end
 
@@ -205,7 +212,8 @@ ListUtils.filter([1,2,3,4,5], &(rem(&1, 2) == 0)) # [2, 4]
 
 ```elixir
 defmodule ListUtils do
-  def map(list, func) when is_list(list) and is_function((func) do
+  def map(list, func)
+  when is_list(list) and is_function(func) do
     do_map(list, func)
   end
 
@@ -237,8 +245,14 @@ defmodule Enum
 
   def reverse([]), do: []
   def reverse([_] = list), do: list
-  def reverse([item1, item2]), do: [item2, item1]
-  def reverse([item1, item2 | rest]), do: :lists.reverse(rest, [item2, item1])
-  def reverse(enumerable), do: reduce(enumerable, [], &[&1 | &2])
+  def reverse([item1, item2]) do
+    [item2, item1]
+  end
+  def reverse([item1, item2 | rest]) do
+    :lists.reverse(rest, [item2, item1])
+  end
+  def reverse(enumerable) do
+    reduce(enumerable, [], &[&1 | &2])
+  end
 end
 ```
