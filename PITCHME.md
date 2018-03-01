@@ -300,7 +300,7 @@ end
 
 #### Представяне на Map
 
-![Image-Absolute](assets/hashtrie.jpg)
+![Image-Absolute](assets/hashtrie.gif)
 
 #HSLIDE
 ####  Създаване и достъп до Map
